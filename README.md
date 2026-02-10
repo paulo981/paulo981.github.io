@@ -1,8 +1,8 @@
-
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Resenha do Paulo Arthur</title>
 <style>
   body {
@@ -11,19 +11,31 @@
     background: radial-gradient(circle at center, rgba(0, 77, 102, 0.9) 0%, rgba(0, 20, 30, 1) 100%);
     color: #e0f7ff;
     text-align: center;
-    overflow-x: hidden;
-    transition: background 0.8s ease-in-out;
+    overflow: hidden;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
-  .container { padding: 20px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-  h1 { font-size: 30px; text-shadow: 0 0 15px #00eaff; margin-bottom: 5px; }
+  .container { 
+    width: 100%; 
+    padding: 10px; 
+    box-sizing: border-box; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+  }
 
-  .btn-container { position: relative; display: inline-block; margin-top: 30px; }
+  h1 { font-size: 26px; text-shadow: 0 0 15px #00eaff; margin-bottom: 10px; text-transform: uppercase; }
+
+  .btn-container { position: relative; display: inline-block; margin-top: 20px; }
+  
   .btn-atom {
     position: relative;
-    padding: 18px 45px;
-    font-size: 22px;
+    padding: 15px 45px;
+    font-size: 20px;
     font-weight: bold;
     text-transform: uppercase;
     border: none;
@@ -34,94 +46,113 @@
     z-index: 10;
     box-shadow: 0 0 20px #00eaff;
     animation: pulse-glow 1.5s infinite alternate;
+    -webkit-tap-highlight-color: transparent;
   }
 
   @keyframes pulse-glow {
-    from { transform: scale(1); box-shadow: 0 0 15px #00eaff; }
-    to { transform: scale(1.08); box-shadow: 0 0 35px #00eaff; }
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
   }
 
   .orbit {
     position: absolute;
     top: 50%; left: 50%;
-    width: 160%; height: 55px;
-    border: 2.5px solid rgba(0, 234, 255, 0.4);
+    width: 140%; height: 50px;
+    border: 2px solid rgba(0, 234, 255, 0.4);
     border-radius: 50%;
     pointer-events: none;
-    animation: rotate-orbit 2s linear infinite;
+    animation: rotate-orbit 2.5s linear infinite;
   }
-  .orbit:nth-child(2) { animation-duration: 3.5s; width: 180%; }
 
   @keyframes rotate-orbit {
     0% { transform: translate(-50%, -50%) rotate(0deg); }
     100% { transform: translate(-50%, -50%) rotate(360deg); }
   }
 
-  #explosion-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: #00eaff;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 999;
-  }
-  .flash-active { animation: flash-anim 0.7s ease-out; }
-  @keyframes flash-anim { 0% { opacity: 0; } 30% { opacity: 1; } 100% { opacity: 0; } }
-
   .hidden { display: none !important; }
+
   .card {
-    background: rgba(0, 0, 0, 0.4); 
-    border-radius: 25px;
-    padding: 25px;
-    box-shadow: 0 0 40px rgba(0, 234, 255, 0.3);
-    border: 1.5px solid rgba(0, 234, 255, 0.7);
-    max-width: 310px;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px); /* Ajuste para Safari */
+    background: rgba(0, 0, 0, 0.25); 
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 90%;
+    max-width: 320px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    animation: popIn 0.5s ease-out;
   }
 
   #countdown {
     display: flex;
     justify-content: space-around;
-    background: rgba(0, 234, 255, 0.1);
-    border-radius: 15px;
-    padding: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 10px;
     margin: 15px 0;
   }
-  .time-box span { display: block; font-size: 22px; color: #fff; font-weight: bold; }
+  .time-box { font-size: 9px; text-transform: uppercase; color: #00eaff; }
+  .time-box span { display: block; font-size: 20px; color: #fff; font-weight: bold; }
+
+  .btn-mapa {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 8px 15px;
+    background: rgba(0, 234, 255, 0.15);
+    border: 1px solid #00eaff;
+    color: #00eaff;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+    transition: 0.3s;
+    text-shadow: none;
+  }
+  .btn-mapa:hover {
+    background: #00eaff;
+    color: #000;
+  }
+
+  #player-wrapper {
+    position: absolute;
+    top: 0; left: 0;
+    width: 1px; height: 1px;
+    opacity: 0.01;
+    overflow: hidden;
+  }
 
   .beer { position: fixed; top: -50px; font-size: 25px; animation: fall linear forwards; z-index: 100; }
   @keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
-  
-  /* Ajuste no player para o Safari aceitar */
-  #player { position: absolute; width: 1px; height: 1px; bottom: 0; left: 0; opacity: 0.01; pointer-events: none; }
+  @keyframes popIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
 </style>
 </head>
 <body>
 
-<div id="explosion-overlay"></div>
-
-<iframe id="player" 
-  src="" 
-  frameborder="0" 
-  allow="autoplay; encrypted-media">
-</iframe>
+<div id="player-wrapper">
+  <div id="yt-player"></div>
+</div>
 
 <div class="container" id="inicio">
-  <h1>🚀 Você foi convocado 🚀</h1>
-  <p style="opacity: 0.8;">Toque no reator para entrar na resenha</p>
+  <h1>🚀 FILOSOFIA DO ARTHUR 🚀</h1>
+  <p style="font-size: 18px; opacity: 0.9; font-weight: bold; line-height: 1.5;">
+    O QUE É A VIDA?<br>
+    A VIDA É UMA... 🚀
+  </p>
   <div class="btn-container">
     <div class="orbit"></div>
-    <div class="orbit"></div>
-    <button class="btn-atom" onclick="entrar()">RESENHA</button>
+    <div class="orbit" style="animation-duration: 4s; width: 160%;"></div>
+    <button class="btn-atom" onclick="entrar()">MARAVILHA</button>
   </div>
 </div>
 
 <div class="container hidden" id="convite">
   <div class="card">
-    <h1>🔥 Resenha do Paulo Arthur 🔥</h1>
-    <p>🎂 Aniversário do brabo</p>
-    <p style="font-size: 26px; color: #00eaff; font-weight: bold;">15/03</p>
+    <h2 style="font-size: 22px; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">🔥 Resenha do<br>Paulo Arthur 🔥</h2>
+    <p style="margin: 5px 0; font-size: 14px;">Aniversário do brabo</p>
+    
+    <p style="font-size: 28px; color: #00eaff; font-weight: bold; margin: 10px 0 0 0; text-shadow: 0 0 10px #00eaff;">15/03</p>
+    <p style="font-size: 18px; color: #fff; margin: 0 0 10px 0; font-weight: bold;">À partir das 13:00h</p>
 
     <div id="countdown">
       <div class="time-box"><span id="days">00</span>Dias</div>
@@ -129,35 +160,59 @@
       <div class="time-box"><span id="mins">00</span>Min</div>
     </div>
 
-    <p>📍 <strong>Sítio Agrovale</strong></p>
-    <p>🎤 No som: <strong>PH Maia</strong></p>
-    <p style="margin-top: 15px;">🍻 Até o Zeca já confirmou,<br>agora só falta você!</p>
+    <p style="font-size: 16px; margin: 5px 0; text-shadow: 1px 1px 2px #000;">
+        📍 <strong>Sítio Agrovale</strong><br>
+        <a href="https://www.google.com/maps/place//@-15.6978712,-47.6665039,633m/data=!3m1!1e3!4m6!1m5!3m4!2zMTXCsDQxJzUyLjMiUyA0N8KwMzknNTAuMSJX!8m2!3d-15.6978712!4d-47.663929?hl=pt-BR&entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-mapa">VER LOCAL NO MAPA 🗺️</a>
+    </p>
     
-    <button class="btn-atom" onclick="confirmar()" style="margin-top:15px; font-size: 14px; animation: none;">Confirmar presença ✅</button>
+    <p style="font-size: 16px; margin: 10px 0 5px 0; text-shadow: 1px 1px 2px #000;">🎤 No som: <strong>PH Maia</strong></p>
+    <p style="color: #ffcc00; font-weight: bold; margin-top: 10px; font-size: 18px; text-shadow: 1px 1px 2px #000;">🧊 TRAGA SEU COOLER 🧊</p>
+    
+    <p style="margin-top: 15px; font-size: 13px; opacity: 0.9; text-shadow: 1px 1px 2px #000;">🍻 Até o Zeca já confirmou,<br>agora só falta você!</p>
+    
+    <button class="btn-atom" onclick="confirmar()" style="margin-top:15px; font-size: 14px; padding: 12px 20px; animation: none;">Confirmar presença ✅</button>
   </div>
 </div>
 
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
-function entrar() {
-  // AJUSTE PARA IPHONE: Carregamos o src NO MOMENTO do clique
-  const player = document.getElementById('player');
-  player.src = "https://www.youtube.com/embed/_H_171CJYHM?autoplay=1&start=28&rel=0&controls=0&showinfo=0";
+var player;
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('yt-player', {
+    height: '100', width: '100',
+    videoId: '_H_171CJYHM',
+    playerVars: {
+      'start': 28,
+      'playsinline': 1,
+      'controls': 0,
+      'disablekb': 1
+    },
+    events: {
+      'onReady': function(e) { e.target.mute(); }
+    }
+  });
+}
 
-  document.getElementById('explosion-overlay').classList.add('flash-active');
+function entrar() {
+  if (player && player.playVideo) {
+    player.unMute();
+    player.setVolume(100);
+    player.playVideo();
+  }
+
+  document.getElementById('inicio').classList.add('hidden');
+  document.getElementById('convite').classList.remove('hidden');
   
-  setTimeout(() => {
-    document.getElementById('inicio').classList.add('hidden');
-    document.getElementById('convite').classList.remove('hidden');
-    
-    const imgZeca = "https://adnews.nyc3.digitaloceanspaces.com/media/7f0dd8bf7d9db02ccee77ccfbd27ed9d.jpg";
-    document.body.style.background = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('${imgZeca}') no-repeat center center fixed`;
-    document.body.style.backgroundSize = "cover";
-    startTimer();
-  }, 300);
+  const imgZeca = "https://adnews.nyc3.digitaloceanspaces.com/media/7f0dd8bf7d9db02ccee77ccfbd27ed9d.jpg";
+  document.body.style.background = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('${imgZeca}') no-repeat center center fixed`;
+  document.body.style.backgroundSize = "cover";
+  
+  startTimer();
 }
 
 function startTimer() {
-  const eventDate = new Date("March 15, 2026 14:00:00").getTime();
+  // Ajustado para 13:00h
+  const eventDate = new Date("March 15, 2026 13:00:00").getTime();
   setInterval(() => {
     const now = new Date().getTime();
     const diff = eventDate - now;
@@ -173,17 +228,17 @@ function confirmar(){
   soltarCerveja();
   setTimeout(() => {
     window.location.href='https://wa.me/5561993190917?text=Até%20o%20Zeca%20confirmou,%20eu%20não%20fico%20de%20fora!%20Confirmado!%20🍻';
-  }, 1500);
+  }, 1200);
 }
 
 function soltarCerveja(){
-  for(let i=0;i<30;i++){
+  for(let i=0;i<25;i++){
     const b = document.createElement('div');
     b.classList.add('beer'); b.innerText='🍺';
     b.style.left = Math.random()*100+'vw';
-    b.style.animationDuration = (Math.random()*2+2)+'s';
+    b.style.animationDuration = (Math.random()*2+1.5)+'s';
     document.body.appendChild(b);
-    setTimeout(() => b.remove(), 4000);
+    setTimeout(() => b.remove(), 3000);
   }
 }
 </script>
